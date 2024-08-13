@@ -4,6 +4,7 @@
 	import Project from './Project.svelte';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { PencilSquare } from 'svelte-heros-v2';
+	import { marked } from 'marked';
 
 	export let experience: ExperienceModel;
 	export let canEdit: boolean = false;
@@ -42,8 +43,9 @@
 	{/if}
 	<article>
 		<h2 id={`${experience._id}`}>{experience.title}</h2>
-		<p>{experience.summary}</p>
-
+		<div class="summary">
+			{@html marked(experience.summary)}
+		</div>
 		<ul>
 			{#each experience.projects as project}
 				<Project {project} experienceId={`${experience._id}`} />
@@ -51,3 +53,10 @@
 		</ul>
 	</article>
 </div>
+
+<style>
+	.summary ul {
+		list-style: disc;
+		padding-left: 20px; /* Add some padding to ensure bullets appear inside the container */
+	}
+</style>
