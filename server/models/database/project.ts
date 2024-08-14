@@ -6,6 +6,7 @@ export const projectSchema = new Schema({
   start: Date,
   end: Date,
   summary: String,
+  summaryType: String,
   hardSkills: [skillSchema],
   softSkills: [skillSchema],
 });

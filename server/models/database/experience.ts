@@ -9,6 +9,7 @@ export interface Experience extends Document {
   type: ExperienceType;
   company: Types.ObjectId | Company;
   summary: string;
+  summaryType: string;
   title: string;
   projects: Project[]
 }

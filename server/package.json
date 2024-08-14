@@ -10,17 +10,17 @@
     "kill": "sudo lsof -t -i:3000 | xargs sudo kill -9"
   },
   "dependencies": {
-    "@elysiajs/cors": "^0.7.0",
-    "@elysiajs/jwt": "^0.7.0",
-    "@elysiajs/swagger": "^0.7.3",
-    "mongoose": "^7.5.2",
+    "@elysiajs/cors": "^0.7.2",
+    "@elysiajs/jwt": "^0.7.1",
+    "@elysiajs/swagger": "^0.7.4",
+    "mongoose": "^7.8.0",
     "portfolio-common": "workspace:common"
   },
   "devDependencies": {
-    "bun-types": "^1.0.2",
-    "@elysiajs/eden": "^0.7.2"
+    "bun-types": "^1.1.24",
+    "@elysiajs/eden": "^0.7.7"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.5.4"
   }
 }
