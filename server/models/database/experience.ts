@@ -1,9 +1,10 @@
-import { Schema, Types, InferSchemaType, model, Document } from 'mongoose';
+import { Schema, Types, model, Document, Model } from 'mongoose';
 import { ExperienceType } from 'portfolio-common';
 import { Project, projectSchema } from './project';
-import { Company, companySchema } from './company';
+import { Company } from './company';
 import { experienceRequest } from '../elysia';
 import { Static } from 'elysia';
+import { Skill } from './skill';
 
 export interface Experience extends Document {
   type: ExperienceType;
@@ -11,6 +12,10 @@ export interface Experience extends Document {
   summary: string;
   title: string;
   projects: Project[]
+}
+
+interface ExperienceModel extends Model<Experience> {
+  fromRequest(request: ExperienceRequest): Promise<Experience>;
 }
 
 const experienceSchema = new Schema<Experience>({
@@ -23,18 +28,38 @@ const experienceSchema = new Schema<Experience>({
 
 type ExperienceRequest = Static<typeof experienceRequest>;
 
-experienceSchema.statics.addItem = async (request: ExperienceRequest) => {
-  const experience = new Experience();
-
-  experience.title = request.title;
-  experience.summary = request.summary;
-  experience.type = request.type;
+experienceSchema.statics.fromRequest = async function (request: ExperienceRequest) {
+  const experience = new Experience({
+    title: request.title,
+    summary: request.summary,
+    type: request.type,
+    company: request.company,
+  });
 
   for (const project of request.projects) {
-    experience.projects.push(await Project.create({ ...project }));
+    const hardSkills = await Promise.all(
+      project.hardSkills.map(async (hardSkill) => {
+        const skill = await Skill.findOrCreate(hardSkill.name);
+        return { skill, level: hardSkill.level };
+      })
+    );
+
+    const softSkills = await Promise.all(
+      project.softSkills.map(async (softSkill) => {
+        const skill = await Skill.findOrCreate(softSkill.name);
+        return { skill, level: softSkill.level };
+      })
+    );
+
+    const newProject = new Project({
+      ...project,
+      hardSkills: hardSkills,
+      softSkills: softSkills,
+    });
+
+    experience.projects.push(newProject);
   }
 
   return experience;
-}
-
-export const Experience = model<Experience>('Experience', experienceSchema);
+};
+export const Experience = model<Experience, ExperienceModel>('Experience', experienceSchema);

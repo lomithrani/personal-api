@@ -14,7 +14,7 @@ export const experiences = new Elysia()
 
     if (!domain) throw new DomainDoesNotExistError(userId)
 
-    let experience = new Experience(body);
+    const experience = await Experience.fromRequest(body);
 
     const result = await experience.save();
 

@@ -5,7 +5,6 @@ import { DateTime } from "./dateTime";
 
 export const skillModel = t.Object({
   name: t.String(),
-  svg: t.Optional(t.String()),
   level: t.Number()
 })
 

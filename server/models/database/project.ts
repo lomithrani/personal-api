@@ -1,14 +1,34 @@
-import { InferSchemaType, Schema, model } from "mongoose";
-import { skillSchema } from "./skill";
+import { Schema, Types, model } from "mongoose";
+import { Skill } from "./skill";
+
+export interface Project extends Document {
+  name: string;
+  start: Date | undefined;
+  end: Date | undefined;
+  summary: string;
+  hardSkills: {
+    skill: Types.ObjectId | Skill,
+    level: number | undefined
+  }[];
+  softSkills: {
+    skill: Types.ObjectId | Skill,
+    level: number | undefined
+  }[];
+}
 
 export const projectSchema = new Schema({
   name: { type: String, required: true },
   start: Date,
   end: Date,
   summary: String,
-  hardSkills: [skillSchema],
-  softSkills: [skillSchema],
+  hardSkills: [{
+    skill: { type: Types.ObjectId, ref: 'Skill', required: true },
+    level: Number
+  }],
+  softSkills: [{
+    skill: { type: Types.ObjectId, ref: 'Skill', required: true },
+    level: Number
+  }],
 });
 
-export type Project = InferSchemaType<typeof projectSchema>;
-export const Project = model('Project', projectSchema);
+export const Project = model<Project>('Project', projectSchema);
