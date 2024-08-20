@@ -1,6 +1,5 @@
 import { t } from "elysia";
 import { ExperienceType } from "portfolio-common";
-import { DateTime } from "./dateTime";
 
 
 export const skillModel = t.Object({
@@ -10,8 +9,8 @@ export const skillModel = t.Object({
 
 export const projectModel = t.Object({
   name: t.String(),
-  start: t.Optional(DateTime),
-  end: t.Optional(DateTime),
+  start: t.Optional(t.Date()),
+  end: t.Optional(t.Date()),
   summary: t.String(),
   hardSkills: t.Array(skillModel),
   softSkills: t.Array(skillModel)

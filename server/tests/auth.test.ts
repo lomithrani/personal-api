@@ -37,7 +37,17 @@ describe("login", () => {
       body: JSON.stringify({ token: '123' })
     }));
 
-    const authToken = parseCookie(result.headers.get('Set-Cookie') ?? '')['auth']
+    console.log(result)
+
+    expect(result.status).toBe(200);
+
+    let setCookie = result.headers.get('Set-Cookie')
+
+    expect(setCookie).toBeDefined();
+
+    setCookie ??= '';
+
+    const authToken = parseCookie(setCookie)['auth']
 
     const userFromToken = jwtDecode(authToken);
 

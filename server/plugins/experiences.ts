@@ -1,6 +1,5 @@
 import { Domain, Experience } from '../models/database';
 import Elysia, { t } from 'elysia';
-import { ExperienceType } from 'portfolio-common'
 import { corsConf } from './corsConf';
 import { userLogged } from './userLogged';
 import { CannotSaveExperienceError, DomainDoesNotExistError } from '../errors';
@@ -32,3 +31,4 @@ export const experiences = new Elysia()
         summary: 'Add new experience'
       }
     })
+
