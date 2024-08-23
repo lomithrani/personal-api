@@ -22,6 +22,7 @@ export const app = new Elysia()
   .error(errors)
   .onError(({ code, error }) => {
     console.error(error)
+
     return error.message;
   })
   .get('/health', () => 'OK')
