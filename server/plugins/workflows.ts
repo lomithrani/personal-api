@@ -15,7 +15,7 @@ export const workflows = new Elysia()
     workflow.user = user;
     workflow.save();
 
-    return workflow;
+    return JSON.parse(JSON.stringify(workflow)) as Workflow;
   },
     {
       body: workflowRequest,
@@ -23,8 +23,22 @@ export const workflows = new Elysia()
         summary: 'Add new workflow'
       }
     })
-  .put('/workflows/:id', async ({ body, params: { id } }) => {
-    return
+  .put('/workflows/:id', async ({ body, userId, params: { id } }) => {
+    if (!id) throw new Error('Id is required')
+
+    const workflow = await Workflow.findById(id);
+
+    if (!workflow) throw new Error('Workflow not found')
+
+    if (workflow.user !== new Types.ObjectId(userId)) {
+      throw new Error('Unauthorized')
+    }
+
+    await workflow.set({ ...body })
+
+    await workflow.save();
+
+    return JSON.parse(JSON.stringify(workflow)) as Workflow;
   },
     {
       body: workflowRequest,

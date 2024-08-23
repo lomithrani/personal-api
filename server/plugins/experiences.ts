@@ -23,7 +23,7 @@ export const experiences = new Elysia()
 
     await domain.save();
 
-    return result;
+    return JSON.parse(JSON.stringify(result)) as Experience;
   },
     {
       body: experienceRequest,

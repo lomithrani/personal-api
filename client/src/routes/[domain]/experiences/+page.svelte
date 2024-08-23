@@ -8,7 +8,6 @@
 	import {
 		TableOfContents,
 		tocCrawler,
-		type ModalComponent,
 		type ModalSettings,
 		getModalStore
 	} from '@skeletonlabs/skeleton';

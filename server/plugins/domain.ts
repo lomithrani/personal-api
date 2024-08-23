@@ -14,6 +14,8 @@ export const domain = new Elysia()
           { path: 'softSkills.skill' }
         ],
       },
-    });
-    return populatedDomain;
+    })
+    const domainObject = JSON.parse(JSON.stringify(populatedDomain)) as Omit<Domain, 'experiences'> & { experiences: Experience[] };
+
+    return domainObject;
   })

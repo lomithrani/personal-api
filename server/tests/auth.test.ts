@@ -37,8 +37,6 @@ describe("login", () => {
       body: JSON.stringify({ token: '123' })
     }));
 
-    console.log(result)
-
     expect(result.status).toBe(200);
 
     let setCookie = result.headers.get('Set-Cookie')
