@@ -53,8 +53,6 @@ describe("login", () => {
 
     const response = await result.json() as { user: User, expires: number };
 
-    console.log(response)
-
     expect(Math.abs(userFromToken.exp! - response.expires)).toBeLessThan(2);
     expect(response.user.email).toBe(testEmail);
     expect(response.expires).toBeGreaterThan((Date.now() + sevenDaysMinusOneSecond) / 1000);

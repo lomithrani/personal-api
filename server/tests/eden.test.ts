@@ -7,37 +7,34 @@ let appInstance: Subprocess<"ignore", "inherit", "inherit"> | undefined = undefi
 
 const api = edenTreaty<Portfolio>("http://localhost:3000");
 
-describe("edenTreaty", () => {
-  beforeAll(async () => {
-    appInstance = Bun.spawn({
-      cmd: ['bun', 'run', 'index.ts'],
-      env: process.env,
-      stdout: 'inherit',
-      stderr: 'inherit',
-    });
-    await waitForHealthCheck()
+beforeAll(async () => {
+  appInstance = Bun.spawn({
+    cmd: ['bun', 'run', 'index.ts'],
+    env: process.env,
+    stdout: 'inherit',
+    stderr: 'inherit',
   });
+  await waitForHealthCheck()
+});
 
-  afterAll(() => {
-    if (appInstance) {
-      appInstance.kill();
-    }
-  });
+afterAll(() => {
+  if (appInstance) {
+    appInstance.kill();
+  }
+});
 
-  test("edenTreaty should have correct methods", async () => {
-    expect(api).toBeDefined()
-    expect(api.login.post).toBeDefined()
-    expect(api.domain[':name'].get).toBeDefined()
-  })
+test("edenTreaty should have correct methods", async () => {
+  expect(api).toBeDefined()
+  expect(api.login.post).toBeDefined()
+  expect(api.domain[':name'].get).toBeDefined()
+})
 
-  test("edentTreaty should return correct responses", async () => {
-    const mySelfDomainResponse = await api.domain['louis.gentil'].get()
-    expect(mySelfDomainResponse).toBeDefined()
-    expect(mySelfDomainResponse.status).toBe(200)
-    expect(mySelfDomainResponse.data).toBeDefined()
-    expect(mySelfDomainResponse.data).toBeObject()
-  })
-
+test("edentTreaty should return correct responses", async () => {
+  const mySelfDomainResponse = await api.domain['louis.gentil'].get()
+  expect(mySelfDomainResponse).toBeDefined()
+  expect(mySelfDomainResponse.status).toBe(200)
+  expect(mySelfDomainResponse.data).toBeDefined()
+  expect(mySelfDomainResponse.data).toBeObject()
 })
 
 async function waitForHealthCheck(url = "http://localhost:3000/health", maxAttempts = 10, interval = 1000) {
