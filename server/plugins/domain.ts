@@ -15,5 +15,5 @@ export const domain = new Elysia()
         ],
       },
     })
-    return populatedDomain;
+    return populatedDomain.toObject()
   })

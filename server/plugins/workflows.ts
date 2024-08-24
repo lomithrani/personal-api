@@ -15,7 +15,7 @@ export const workflows = new Elysia()
     workflow.user = user;
     workflow.save();
 
-    return JSON.parse(JSON.stringify(workflow)) as Workflow;
+    return workflow.toObject();
   },
     {
       body: workflowRequest,
@@ -34,11 +34,11 @@ export const workflows = new Elysia()
       throw new Error('Unauthorized')
     }
 
-    await workflow.set({ ...body })
+    workflow.set({ ...body })
 
     await workflow.save();
 
-    return JSON.parse(JSON.stringify(workflow)) as Workflow;
+    return workflow.toObject()
   },
     {
       body: workflowRequest,
