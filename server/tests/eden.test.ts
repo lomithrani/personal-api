@@ -1,7 +1,7 @@
 import { test, expect, describe, beforeAll, afterAll } from 'bun:test'
 import { edenTreaty } from '@elysiajs/eden'
 import type { Portfolio } from '..'
-import { ErrorLike, Subprocess, fetch } from 'bun';
+import { Subprocess, fetch } from 'bun';
 
 let appInstance: Subprocess<"ignore", "inherit", "inherit"> | undefined = undefined;
 

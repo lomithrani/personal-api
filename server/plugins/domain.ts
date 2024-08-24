@@ -15,7 +15,5 @@ export const domain = new Elysia()
         ],
       },
     })
-    const domainObject = JSON.parse(JSON.stringify(populatedDomain)) as Omit<Domain, 'experiences'> & { experiences: Experience[] };
-
-    return domainObject;
+    return populatedDomain;
   })
