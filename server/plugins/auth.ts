@@ -52,7 +52,7 @@ export const googleAuth = new Elysia()
     },
     {
       cookie: t.Cookie({
-        auth: t.String()
+        auth: t.Optional(t.String())
       }),
       body: t.Object({
         token: t.String()
@@ -79,7 +79,7 @@ export const googleAuth = new Elysia()
     },
     {
       cookie: t.Cookie({
-        auth: t.String()
+        auth: t.Optional(t.String())
       })
     })
   .get("/logout",
@@ -88,7 +88,7 @@ export const googleAuth = new Elysia()
     },
     {
       cookie: t.Cookie({
-        auth: t.String()
+        auth: t.Optional(t.String())
       })
     })
 

@@ -37,13 +37,21 @@ describe("login", () => {
       body: JSON.stringify({ token: '123' })
     }));
 
-    const authToken = parseCookie(result.headers.get('Set-Cookie') ?? '')['auth']
+    expect(result.status).toBe(200);
+
+    let setCookie = result.headers.get('Set-Cookie')
+
+    expect(setCookie).toBeDefined();
+
+    setCookie ??= '';
+
+    const authToken = parseCookie(setCookie)['auth']
 
     const userFromToken = jwtDecode(authToken);
 
     expect(result.status).toBe(200);
 
-    const response: { user: User, expires: number } = await result.json();
+    const response = await result.json() as { user: User, expires: number };
 
     expect(Math.abs(userFromToken.exp! - response.expires)).toBeLessThan(2);
     expect(response.user.email).toBe(testEmail);
@@ -64,7 +72,7 @@ describe("login", () => {
 
     expect(result.status).toBe(200);
 
-    const response: { user: User, expires: number } = await result.json();
+    const response = await result.json() as { user: User, expires: number };
 
     expect(response.user.email).toBe(testEmail);
     expect(response.expires).toBeGreaterThan((Date.now() + sevenDaysMinusOneSecond) / 1000);

@@ -1,11 +1,13 @@
 <script lang="ts">
-	import type { Experience as ExperienceModel } from 'portfolio-api/models/database';
+	import type {
+		Experience as ExperienceModel,
+		Skill as SkillModel
+	} from 'portfolio-api/models/database';
 	import type { PageData } from './$types';
 	import { PlusCircle } from 'svelte-heros-v2';
 	import {
 		TableOfContents,
 		tocCrawler,
-		type ModalComponent,
 		type ModalSettings,
 		getModalStore
 	} from '@skeletonlabs/skeleton';
@@ -51,8 +53,12 @@
 		return (experiences = data.domain.experiences.filter((experience) =>
 			experience.projects.some(
 				(project) =>
-					project.softSkills.some((softSkill) => filters.softSkills.has(softSkill.name)) ||
-					project.hardSkills.some((hardSkill) => filters.hardSkills.has(hardSkill.name))
+					project.softSkills.some((softSkill) =>
+						filters.softSkills.has((softSkill.skill as SkillModel).displayName)
+					) ||
+					project.hardSkills.some((hardSkill) =>
+						filters.hardSkills.has((hardSkill.skill as SkillModel).displayName)
+					)
 			)
 		));
 	};
