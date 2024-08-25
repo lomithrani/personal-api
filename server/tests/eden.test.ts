@@ -23,6 +23,7 @@ afterAll(() => {
   }
 });
 
+
 test("edenTreaty should have correct methods", async () => {
   expect(api).toBeDefined()
   expect(api.login.post).toBeDefined()
@@ -33,7 +34,6 @@ test("edentTreaty should return correct responses", async () => {
   const mySelfDomainResponse = await api.domain['louis.gentil'].get()
   expect(mySelfDomainResponse).toBeDefined()
   expect(mySelfDomainResponse.status).toBe(200)
-  expect(mySelfDomainResponse.data).toBeDefined()
   expect(mySelfDomainResponse.data).toBeObject()
 })
 
