@@ -1,6 +1,5 @@
 import { Domain, Experience } from '../models/database';
 import Elysia, { t } from 'elysia';
-import { ExperienceType } from 'portfolio-common'
 import { corsConf } from './corsConf';
 import { userLogged } from './userLogged';
 import { CannotSaveExperienceError, DomainDoesNotExistError } from '../errors';
@@ -14,7 +13,7 @@ export const experiences = new Elysia()
 
     if (!domain) throw new DomainDoesNotExistError(userId)
 
-    let experience = new Experience(body);
+    const experience = await Experience.fromRequest(body);
 
     const result = await experience.save();
 
@@ -24,7 +23,7 @@ export const experiences = new Elysia()
 
     await domain.save();
 
-    return result;
+    return result.toObject();
   },
     {
       body: experienceRequest,
@@ -32,3 +31,4 @@ export const experiences = new Elysia()
         summary: 'Add new experience'
       }
     })
+

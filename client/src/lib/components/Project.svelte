@@ -1,8 +1,12 @@
 <script lang="ts">
-	import type { Project } from 'portfolio-api/models/database';
+	import type { Project, Skill as SkillModel } from 'portfolio-api/models/database';
 	import Skill from './Skill.svelte';
 	export let project: Project;
 	export let experienceId: String;
+
+	const castSkill = (skill: unknown) => {
+		return skill as SkillModel;
+	};
 </script>
 
 <div class="block card card-hover variant-ghost-secondary p-2 m-1">
@@ -13,10 +17,10 @@
 
 		<div>
 			{#each project.hardSkills as hardSkill}
-				<Skill skill={hardSkill} />
+				<Skill skill={castSkill(hardSkill.skill)} level={hardSkill.level || -1} />
 			{/each}
 			{#each project.softSkills as softSkill}
-				<Skill skill={softSkill} />
+				<Skill skill={castSkill(softSkill.skill)} level={softSkill.level || -1} />
 			{/each}
 		</div>
 	</article>

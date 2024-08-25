@@ -10,7 +10,11 @@
 	import { ExperienceType } from 'portfolio-common';
 
 	import { newExperienceDataStore, type FormData } from '$lib/stores/newExperienceStore';
-	import type { Company, Experience as ExperienceModel } from 'portfolio-api/models/database';
+	import type {
+		Company,
+		Experience as ExperienceModel,
+		Skill
+	} from 'portfolio-api/models/database';
 
 	const modalStore = getModalStore();
 
@@ -31,8 +35,8 @@
 					start: (<string>(project.start as unknown)).split('T')[0],
 					end: (<string>(project.end as unknown)).split('T')[0],
 					summary: project.summary ?? '',
-					hardSkills: project.hardSkills.map((skill) => skill.name),
-					softSkills: project.softSkills.map((skill) => skill.name)
+					hardSkills: project.hardSkills.map((skill) => (skill.skill as Skill).displayName),
+					softSkills: project.softSkills.map((skill) => (skill.skill as Skill).displayName)
 				};
 			})
 		});
@@ -60,13 +64,11 @@
 						...project,
 						hardSkills: project.hardSkills.map((skillName) => ({
 							name: skillName,
-							level: -1, // Temporary , waiting from custom inputChip - TODO
-							svg: undefined // Temporary , waiting from custom inputChip - TODO
+							level: -1 // Temporary , waiting from custom inputChip - TODO
 						})),
 						softSkills: project.softSkills.map((skillName) => ({
 							name: skillName,
-							level: -1, // Temporary , waiting from custom inputChip - TODO
-							svg: undefined // Temporary , waiting from custom inputChip - TODO
+							level: -1 // Temporary , waiting from custom inputChip - TODO
 						}))
 					};
 				})

@@ -3,7 +3,7 @@ import Elysia from "elysia";
 import { corsConf } from "./corsConf";
 import { AuthExpiredError, CouldntVerifyJwtError, MissingAuthCookieError, SubMissingError } from "../errors";
 
-export const userLogged = () => new Elysia()
+export const userLogged = () => new Elysia({ name: 'userLogged' })
   .use(corsConf())
   .use(jwt({
     name: 'jwt',

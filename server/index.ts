@@ -1,25 +1,35 @@
 import mongoose from 'mongoose';
 import { Elysia } from 'elysia'
-import { experiences, googleAuth, domain } from './plugins';
+import { experiences, googleAuth, domain, workflows } from './plugins';
 import { validateEnvironment } from './services/validation';
-import swagger from '@elysiajs/swagger';
 import { errors } from './errors';
+import { swagger } from '@elysiajs/swagger';
 
 validateEnvironment();
 
 await mongoose.connect(Bun.env.MONGO_URL ?? '');
 
 export const app = new Elysia()
-  .use(swagger())
+  .use(swagger({
+    path: '/swagger',
+    documentation: {
+      info: {
+        title: 'Portfolio Documentation',
+        version: '1.0.0'
+      }
+    }
+  }))
   .error(errors)
   .onError(({ code, error }) => {
     console.error(error)
+
     return error.message;
   })
   .get('/health', () => 'OK')
+  .use(googleAuth)
   .use(domain)
-  .use(googleAuth) //everything after this needs to be logged in
   .use(experiences)
+  .use(workflows)
   .listen({
     hostname: Bun.env.HOSTNAME || "::",
     port: Bun.env.PORT || 3000,

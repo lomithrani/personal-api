@@ -7,11 +7,15 @@ export async function load({ params }) {
     $fetch: { credentials: 'include' }
   });
 
+  console.log('Domain recieved by Eden :', data);
+
   if (error || !data) {
     throw redirect(302, '/louis.gentil/experiences');
   }
 
   return {
-    domain: data
+    domain: data as Omit<Domain, "experiences"> & {
+      experiences: Experience[];
+    }
   };
 }
