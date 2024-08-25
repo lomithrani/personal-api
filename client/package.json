@@ -48,7 +48,9 @@
   },
   "type": "module",
   "dependencies": {
-    "@elysiajs/eden": "^1.1.2"
+    "@elysiajs/eden": "^1.1.2",
+    "highlight.js": "^11.10.0",
+    "marked": "^14.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
