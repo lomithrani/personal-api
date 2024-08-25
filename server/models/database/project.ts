@@ -21,6 +21,7 @@ export const projectSchema = new Schema({
   start: Date,
   end: Date,
   summary: String,
+  summaryType: String,
   hardSkills: [{
     skill: { type: Types.ObjectId, ref: 'Skill', required: true },
     level: Number

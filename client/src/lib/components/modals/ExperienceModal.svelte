@@ -130,7 +130,7 @@
 				class="textarea"
 				rows="4"
 				bind:value={formData.summary}
-				placeholder="Enter a brief summary of the overall experience..."
+				placeholder="Enter a brief summary of the overall experience... (supports markdown)"
 			/>
 
 			<span>Projects</span>
